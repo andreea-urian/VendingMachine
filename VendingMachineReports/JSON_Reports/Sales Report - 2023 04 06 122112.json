@@ -1,0 +1,28 @@
+{
+  "Sales": [
+    {
+      "DateTime": "2023-04-06T12:21:11.8488572+03:00",
+      "ProductName": "product",
+      "Price": 2.5,
+      "PaymentMethod": "card"
+    },
+    {
+      "DateTime": "2023-04-06T12:21:11.8488572+03:00",
+      "ProductName": "product",
+      "Price": 2.5,
+      "PaymentMethod": "card"
+    },
+    {
+      "DateTime": "2023-04-06T12:21:12.0114683+03:00",
+      "ProductName": "product",
+      "Price": 2.5,
+      "PaymentMethod": "card"
+    },
+    {
+      "DateTime": "2023-04-06T12:21:12.0114683+03:00",
+      "ProductName": "product",
+      "Price": 2.5,
+      "PaymentMethod": "card"
+    }
+  ]
+}

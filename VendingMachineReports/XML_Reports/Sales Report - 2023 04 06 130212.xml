@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<SalesReport xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Sale>
+    <DateTime>2023-04-06T13:02:12.1712673+03:00</DateTime>
+    <ProductName>product</ProductName>
+    <Price>2.5</Price>
+    <PaymentMethod>card</PaymentMethod>
+  </Sale>
+  <Sale>
+    <DateTime>2023-04-06T13:02:12.1712673+03:00</DateTime>
+    <ProductName>product</ProductName>
+    <Price>2.5</Price>
+    <PaymentMethod>card</PaymentMethod>
+  </Sale>
+  <Sale>
+    <DateTime>2023-03-13T10:40:00</DateTime>
+    <ProductName>product1</ProductName>
+    <Price>5</Price>
+    <PaymentMethod>cash</PaymentMethod>
+  </Sale>
+</SalesReport>
