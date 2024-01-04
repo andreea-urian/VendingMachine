@@ -2,6 +2,14 @@
 {
     public interface IUseCase
     {
-        public void Execute();
+        public virtual void Execute()
+        {
+            
+        }
+
+        public virtual void Execute(float price)
+        {
+
+        }
     }
 }

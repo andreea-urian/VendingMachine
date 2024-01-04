@@ -8,7 +8,7 @@ using iQuest.VendingMachine.Business.Payment;
 
 namespace iQuest.VendingMachine.Business.UseCases
 {
-    public class PaymentUseCase 
+    public class PaymentUseCase : IUseCase
     {
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -39,6 +39,7 @@ namespace iQuest.VendingMachine.Business.UseCases
             this._buyView = buyView;
             this._paymentAlgorithmList = new List<IPaymentAlgorithm>(paymentAlgorithm);
         }
+
         public void Execute(float price)
         {
             int idPaymentMethod;
@@ -52,7 +53,10 @@ namespace iQuest.VendingMachine.Business.UseCases
             foreach(IPaymentAlgorithm paymentAlgorithm in _paymentAlgorithmList)
             {
                 if (paymentAlgorithm.Name == paymentMethodSelected)
-                    paymentAlgorithm.Run(price);
+                    if(!paymentAlgorithm.Run(price))
+                    {
+                        throw new Exception("Payment Fail");
+                    }
             }
         }
     }

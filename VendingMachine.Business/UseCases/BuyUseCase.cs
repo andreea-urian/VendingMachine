@@ -14,16 +14,16 @@ namespace iQuest.VendingMachine.Business.UseCases
         private readonly IProductRepository productRepository;
         private readonly IBuyView buyView;
         private readonly IAuthenticationService authenticationService;
-        private PaymentUseCase paymentUseCase;
+        private IUseCase paymentUseCase;
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public BuyUseCase(IProductRepository productRepository, IBuyView buyView, IAuthenticationService authenticationService,PaymentUseCase paymentUseCase)
+        public BuyUseCase(IProductRepository productRepository, IBuyView buyView, IAuthenticationService authenticationService,IUseCase paymentUseCase)
         {
             this.productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
             this.buyView = buyView ?? throw new ArgumentNullException(nameof(buyView));
             this.authenticationService = authenticationService ?? throw new ArgumentNullException(nameof(authenticationService));
             this.paymentUseCase = paymentUseCase ?? throw new ArgumentNullException(nameof(paymentUseCase));
-        }
+        } 
 
         public void Execute()
         {

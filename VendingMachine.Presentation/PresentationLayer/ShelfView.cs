@@ -27,22 +27,28 @@ namespace iQuest.VendingMachine.Presentation
 
         public void DisplayAvailableProducts(IEnumerable<Product> allProducts, List<Product>displayProducts)
         {
+            bool productExist = false;
+            if(allProducts is null)
+            {
+                log.Error(new ArgumentNullException());
+                throw new ArgumentNullException();
+            }
+
             foreach (Product product in allProducts)
             {
+                productExist = true;
                 if (product.Quantity > 0)
                 {
                     displayProducts.Add(product);
                     Display(product.ColumnId + " " + product.Name + " " + product.Price + " " + product.Quantity + "\n", ConsoleColor.DarkCyan);
-                }
-
-                else
-                {
-                    log.Error(new InsufficentStockException());
-                    throw new InsufficentStockException();
-                }
-                  
+                } 
             }
 
+            if(!productExist)
+            {
+                log.Error(new InsufficentStockException());
+                throw new InsufficentStockException();
+            }
         }
     }
 }

@@ -1,38 +1,36 @@
+﻿using System;
 using iQuest.VendingMachine.Business.Dependencies;
 using iQuest.VendingMachine.Business.Exceptions;
 using iQuest.VendingMachine.Business.UseCases;
 using iQuest.VendingMachine.DataAccess.Domaine;
 using iQuest.VendingMachine.DataAccess.Repository;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System.Collections.Generic;
 
-namespace VendingMachineTests
+namespace VendingMachine.Tests.UseCases
 {
-    [TestClass]
-    public class BuyUseCaseTest
-    {
+	public class BuyUseCaseTest
+	{
         private Mock<IProductRepository> productRepository = new Mock<IProductRepository>();
         private Mock<IBuyView> buyView = new Mock<IBuyView>();
         private Mock<IAuthenticationService> authenticationService = new Mock<IAuthenticationService>();
-        private Mock<PaymentUseCase> paymentUseCase = new Mock<PaymentUseCase>();
+        private Mock<IUseCase> paymentUseCase = new Mock<IUseCase>();
         private BuyUseCase buyUseCase;
 
-        public BuyUseCaseTest()
+        [SetUp]
+        public void Setup()
         {
-
             buyUseCase = new BuyUseCase(productRepository.Object, buyView.Object, authenticationService.Object, paymentUseCase.Object);
         }
 
-        [TestMethod]
+        [Test]
         public void HavingABuyUseCase_WhenProductRequestIsNull_ThenThrowCancelException()
         {
             buyView.Setup(x => x.ProductRequest()).Returns(value: null);
 
-            Assert.ThrowsException<CancelException>(() => buyUseCase.Execute());
+            Assert.Throws<CancelException>(() => buyUseCase.Execute());
         }
 
-        [TestMethod]
+        [Test]
         public void HavingABuyUseCase_WhenBuyingOneProduct_ThenQuantityIsDecrementedByOne()
         {
             List<Product> product = new List<Product>();
@@ -42,11 +40,11 @@ namespace VendingMachineTests
             buyView.Setup(x => x.ProductRequest()).Returns("4");
             buyUseCase.Execute();
 
-            productRepository.Verify(x => x.Decrement(It.IsAny<int>(),It.IsAny<int>()), Times.Once());
+            productRepository.Verify(x => x.Decrement(It.IsAny<int>(), It.IsAny<int>()), Times.Once());
 
         }
 
-        [TestMethod]
+        [Test]
         public void HavingABuyUseCase_WhenColumnDoesNotExist_ThenThrowInvalidColumnException()
         {
             List<Product> product = new List<Product>();
@@ -55,11 +53,10 @@ namespace VendingMachineTests
             productRepository.Setup(x => x.GetByColumn(It.IsAny<int>())).Returns(product[0]);
             buyView.Setup(x => x.ProductRequest()).Returns("5tg");
 
-            Assert.ThrowsException<InvalidColumnException>(() => buyUseCase.Execute());
-
+            Assert.Throws<InvalidColumnException>(() => buyUseCase.Execute());
         }
 
-        [TestMethod]
+        [Test]
         public void HavingABuyUseCase_WhenRequestingTooManyProducts_ThenThrowInsufficentStockException()
         {
             List<Product> product = new List<Product>();
@@ -68,10 +65,9 @@ namespace VendingMachineTests
             productRepository.Setup(x => x.GetByColumn(It.IsAny<int>())).Returns(product[0]);
             buyView.Setup(x => x.ProductRequest()).Returns("4");
 
-            Assert.ThrowsException<InsufficentStockException>(() => buyUseCase.Execute());
+            Assert.Throws<InsufficentStockException>(() => buyUseCase.Execute());
 
         }
     }
 }
-
 
